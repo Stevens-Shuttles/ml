@@ -17,7 +17,7 @@ def entries_since(timestamp: int):
         "Select": "SPECIFIC_ATTRIBUTES",
         "ProjectionExpression": "id, #t, #p, route_id, speed",
         "ExpressionAttributeNames": {"#t": "timestamp", "#p": "position"},
-        "Limit": 2000,
+        "Limit": 2500,
         "FilterExpression": Attr("timestamp").gt(timestamp)
     }
 
@@ -26,11 +26,13 @@ def entries_since(timestamp: int):
     res = table.scan(**params)
     entries.extend(res["Items"])
     count = 1
-    while res["LastEvaluatedKey"]:
+    while res.get("LastEvaluatedKey"):
         print(f"{count}: {res['ScannedCount']}")
         params["ExclusiveStartKey"] = res["LastEvaluatedKey"]
         res = table.scan(**params)
         entries.extend(res["Items"])
+        time.sleep(1)
+        count += 1
 
     return entries
 
