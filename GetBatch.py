@@ -1,3 +1,4 @@
+import pickle
 import time
 
 import boto3
@@ -17,7 +18,7 @@ def entries_since(timestamp: int):
         "Select": "SPECIFIC_ATTRIBUTES",
         "ProjectionExpression": "id, #t, #p, route_id, speed",
         "ExpressionAttributeNames": {"#t": "timestamp", "#p": "position"},
-        "Limit": 2500,
+        "Limit": 5000,
         "FilterExpression": Attr("timestamp").gt(timestamp)
     }
 
@@ -38,9 +39,9 @@ def entries_since(timestamp: int):
 
 
 def main():
-    entries = entries_since(timestamp=1579478401)
-    with open("entries.dat", "w") as entries_file:
-        print(repr(entries), file=entries_file)
+    entries = entries_since(timestamp=1571529600)
+    with open("entries.dat", "wb") as entries_file:
+        pickle.dump(entries, entries_file)
 
 
 if __name__ == "__main__":
