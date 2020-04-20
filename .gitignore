@@ -1,2 +1,5 @@
 .idea
+__pycache__
 venv
+confirmed_stops.dat
+entries.dat
