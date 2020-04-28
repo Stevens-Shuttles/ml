@@ -179,17 +179,17 @@ def add_times_to_stops():
 
 
 def main():
-    for meta in load_paper_schedules().values():
-        for sched in meta:
-            count = 0
-            for times in sched["times"].values():
-                count += len(times)
-            print(f"{sched['file']}: {count}")
-    # ss = ShuttleService(307)
-    # for s in ss.get_stops():
-    #     print(f"{s.id} | {s.name}")
+    # for meta in load_paper_schedules().values():
+    #     for sched in meta:
+    #         count = 0
+    #         for times in sched["times"].values():
+    #             count += len(times)
+    #         print(f"{sched['file']}: {count}")
+    ss = ShuttleService(307)
+    for s in ss.get_routes():
+        print(s)
     # write_confirmed_stops()
-    add_times_to_stops()
+    # add_times_to_stops()
 
 
 if __name__ == "__main__":
